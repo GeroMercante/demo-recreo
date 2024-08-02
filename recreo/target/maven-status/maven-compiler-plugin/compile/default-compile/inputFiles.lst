@@ -1,7 +1,9 @@
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\config\CorsConfig.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\config\EmailConfig.java
-D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\config\JWTAuthFilter.java
+D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\config\filters\JWTAuthFilter.java
+D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\config\filters\LocaleFilter.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\config\LocaleResolverConfig.java
+D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\config\MessageSourceConfig.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\config\ModelMapperConfig.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\config\SecurityConfig.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\controllers\bo\user\AuthController.java
@@ -54,7 +56,9 @@ D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\se
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\services\RevokedTokenService.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\services\SessionService.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\services\UserService.java
+D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\utils\ApiRoutes.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\utils\AppConstant.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\utils\AppUtils.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\utils\JwtUtils.java
+D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\utils\MessageUtil.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\utils\Validators.java

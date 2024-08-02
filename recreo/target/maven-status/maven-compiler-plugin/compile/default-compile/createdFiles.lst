@@ -26,6 +26,7 @@ com\recreo\utils\AppUtils.class
 com\recreo\repositories\UserRepository.class
 com\recreo\services\RevokedTokenService.class
 com\recreo\entities\Session.class
+com\recreo\utils\MessageUtil.class
 com\recreo\exceptions\RecreoApiException.class
 com\recreo\config\ModelMapperConfig$1.class
 com\recreo\dto\ProfileDTO.class
@@ -34,6 +35,7 @@ com\recreo\enums\CredentialTypeEnum.class
 com\recreo\enums\DocumentTypeEnum.class
 com\recreo\services\SessionService.class
 com\recreo\services\impl\BaseServices.class
+com\recreo\config\filters\JWTAuthFilter.class
 com\recreo\dto\LoginRequestDTO.class
 com\recreo\config\CorsConfig$1.class
 com\recreo\config\CorsConfig.class
@@ -48,13 +50,15 @@ com\recreo\controllers\bo\user\AuthController.class
 com\recreo\managers\UserManager.class
 com\recreo\exceptions\BadCredentialsException.class
 com\recreo\RecreoApplication.class
+com\recreo\config\MessageSourceConfig.class
+com\recreo\utils\ApiRoutes.class
 com\recreo\services\impl\EmailServiceImpl.class
-com\recreo\config\JWTAuthFilter.class
 com\recreo\dto\ChangeTemporaryPasswordDTO.class
 com\recreo\entities\ProfilePermission.class
 com\recreo\entities\Credential.class
 com\recreo\managers\ProfileManager.class
 com\recreo\services\impl\AuthServiceImpl.class
+com\recreo\config\filters\LocaleFilter.class
 com\recreo\repositories\ProfileRepository.class
 com\recreo\repositories\SessionRepository.class
 com\recreo\exceptions\ExpiredJwtException.class
