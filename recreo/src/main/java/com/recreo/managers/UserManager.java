@@ -6,6 +6,7 @@ import com.recreo.exceptions.RecreoApiException;
 import com.recreo.entities.Profile;
 import com.recreo.entities.User;
 import com.recreo.repositories.UserRepository;
+import com.recreo.utils.MessageUtil;
 import com.recreo.utils.Validators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,12 +20,14 @@ public class UserManager {
     private final UserRepository userRepository;
     private final CredentialManager credentialManager;
     private final ProfileManager profileManager;
+    private final MessageUtil messageUtil;
 
     @Autowired
-    public UserManager(UserRepository userRepository, CredentialManager credentialManager, ProfileManager profileManager) {
+    public UserManager(UserRepository userRepository, CredentialManager credentialManager, ProfileManager profileManager, MessageUtil messageUtil) {
         this.userRepository = userRepository;
         this.credentialManager = credentialManager;
         this.profileManager = profileManager;
+        this.messageUtil = messageUtil;
     }
 
     public User createUser(UserDTO userDTO, CredentialDTO credentialDTO) throws RecreoApiException {
@@ -33,7 +36,7 @@ public class UserManager {
         User user = userRepository.findByEmail(userDTO.getEmail()).orElse(null);
 
         if (user != null) {
-            throw new RecreoApiException("El usuario ya existe");
+            throw new RecreoApiException(messageUtil.getMessage("user.exist"));
         }
 
         Profile profile = profileManager.getProfile(userDTO.getProfile());
@@ -58,7 +61,7 @@ public class UserManager {
     }
 
     public User getUserById(Long userId) throws RecreoApiException {
-        return userRepository.findById(userId).orElseThrow(() -> new RecreoApiException("No se encontró el usuario especificado"));
+        return userRepository.findById(userId).orElseThrow(() -> new RecreoApiException(messageUtil.getMessage("user.not.found")));
     }
 
     public User updateUser(Long userId, UserDTO userDTO) throws RecreoApiException {

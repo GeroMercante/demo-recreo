@@ -19,6 +19,10 @@ public class Profile extends BaseEntity {
     @JsonBackReference
     private List<ProfilePermission> profilePermissions;
 
+    public Profile() {
+        this.profilePermissions = new ArrayList<>();
+    }
+
     public List<String> getPermissionCodes() {
         List<String> list = new ArrayList<>();
         for (ProfilePermission pp : this.getProfilePermissions()) {

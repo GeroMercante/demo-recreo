@@ -3,6 +3,7 @@ com\recreo\entities\RevokedToken.class
 com\recreo\dto\UserDTO.class
 com\recreo\exceptions\RestControllerExceptionHandler.class
 com\recreo\managers\CredentialManager.class
+com\recreo\services\ProfileService.class
 com\recreo\enums\PermissionsEnum.class
 com\recreo\utils\Validators.class
 com\recreo\dto\LoginResponseDTO.class
@@ -12,6 +13,7 @@ com\recreo\dto\SessionDTO.class
 com\recreo\services\UserService.class
 com\recreo\enums\ResponseApiErrorCodeEnum.class
 com\recreo\services\impl\UserServiceImpl.class
+com\recreo\controllers\bo\user\ProfileController.class
 com\recreo\services\EmailService.class
 com\recreo\config\EmailConfig.class
 com\recreo\entities\Profile.class
@@ -35,6 +37,7 @@ com\recreo\enums\CredentialTypeEnum.class
 com\recreo\enums\DocumentTypeEnum.class
 com\recreo\services\SessionService.class
 com\recreo\services\impl\BaseServices.class
+com\recreo\services\impl\ProfileServiceImpl.class
 com\recreo\config\filters\JWTAuthFilter.class
 com\recreo\dto\LoginRequestDTO.class
 com\recreo\config\CorsConfig$1.class

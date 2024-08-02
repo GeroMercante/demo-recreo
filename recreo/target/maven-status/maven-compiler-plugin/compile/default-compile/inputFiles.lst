@@ -7,6 +7,7 @@ D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\co
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\config\ModelMapperConfig.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\config\SecurityConfig.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\controllers\bo\user\AuthController.java
+D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\controllers\bo\user\ProfileController.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\controllers\bo\user\UserController.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\dto\BaseDTO.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\dto\ChangeTemporaryPasswordDTO.java
@@ -50,9 +51,11 @@ D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\se
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\services\impl\BaseServices.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\services\impl\CredentialServiceImpl.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\services\impl\EmailServiceImpl.java
+D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\services\impl\ProfileServiceImpl.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\services\impl\RevokedTokenServiceImpl.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\services\impl\SessionServiceImpl.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\services\impl\UserServiceImpl.java
+D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\services\ProfileService.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\services\RevokedTokenService.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\services\SessionService.java
 D:\Creative Coefficient\recreo\v1-demo\recreo\recreo\src\main\java\com\recreo\services\UserService.java

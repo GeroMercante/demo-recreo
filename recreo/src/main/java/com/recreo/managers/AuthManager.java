@@ -7,6 +7,7 @@ import com.recreo.exceptions.RecreoApiException;
 import com.recreo.repositories.CredentialRepository;
 import com.recreo.services.impl.SessionServiceImpl;
 import com.recreo.utils.JwtUtils;
+import com.recreo.utils.MessageUtil;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,18 +21,20 @@ public class AuthManager {
     private final SessionServiceImpl sessionServiceImpl;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
+    private final MessageUtil messageUtil;
 
-    public AuthManager(CredentialRepository credentialRepository, org.springframework.security.authentication.AuthenticationManager authenticationManager, SessionServiceImpl sessionServiceImpl, PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
+    public AuthManager(CredentialRepository credentialRepository, org.springframework.security.authentication.AuthenticationManager authenticationManager, SessionServiceImpl sessionServiceImpl, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, MessageUtil messageUtil) {
         this.credentialRepository = credentialRepository;
         this.authenticationManager = authenticationManager;
         this.sessionServiceImpl = sessionServiceImpl;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtils = jwtUtils;
+        this.messageUtil = messageUtil;
     }
 
     public Credential authenticateWithCredential(LoginRequestDTO loginRequestDTO) throws RecreoApiException {
         Credential credential = credentialRepository.findByUser_Email(loginRequestDTO.getEmail())
-                .orElseThrow(() -> new RecreoApiException("Credenciales no encontradas para el usuario"));
+                .orElseThrow(() -> new RecreoApiException(messageUtil.getMessage("credential.not.found")));
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword()));
 
@@ -40,10 +43,10 @@ public class AuthManager {
 
     public Credential changePassword(ChangeTemporaryPasswordDTO changeTemporaryPasswordDTO, String token) throws RecreoApiException {
         String userEmail = jwtUtils.extractUsername(token);
-        Credential credential = credentialRepository.findByUser_Email(userEmail).orElseThrow(() -> new RecreoApiException("Credenciales no encontradas para el usuario"));
+        Credential credential = credentialRepository.findByUser_Email(userEmail).orElseThrow(() -> new RecreoApiException(messageUtil.getMessage("credential.not.found")));
 
         if (!passwordEncoder.matches(changeTemporaryPasswordDTO.getOldPassword(), credential.getPassword())) {
-            throw new RecreoApiException("Contraseña temporal incorrecta");
+            throw new RecreoApiException(messageUtil.getMessage("password.not.match"));
         }
 
         credential.setIsTemporary(false);

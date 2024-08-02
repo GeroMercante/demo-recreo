@@ -6,6 +6,7 @@ import com.recreo.exceptions.RecreoApiException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,9 @@ public class JwtUtils {
 
     @Value("${jwt.secret}")
     private String secretString;
+
+    @Autowired
+    private static MessageUtil messageUtil;
 
     @PostConstruct
     public void init() {
@@ -84,7 +88,7 @@ public class JwtUtils {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             return authHeader.substring(7);
         } else {
-            throw new RecreoApiException("No se puede establecer el token.");
+            throw new RecreoApiException(messageUtil.getMessage("invalid.token"));
         }
     }
 }
