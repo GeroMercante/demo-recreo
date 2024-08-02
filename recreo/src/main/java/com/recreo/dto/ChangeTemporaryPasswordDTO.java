@@ -5,6 +5,7 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChangeTemporaryPasswordDTO extends LoginRequestDTO {
+public class ChangeTemporaryPasswordDTO {
+    private String oldPassword;
     private String newPassword;
 }

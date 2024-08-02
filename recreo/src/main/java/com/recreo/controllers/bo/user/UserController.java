@@ -19,11 +19,13 @@ public class UserController {
 
     private final UserService userService;
     private final JwtUtils jwtUtils;
+    private final AppUtils appUtils;
 
     @Autowired
-    public UserController(UserService userService, JwtUtils jwtUtils) {
+    public UserController(UserService userService, JwtUtils jwtUtils, AppUtils appUtils) {
         this.userService = userService;
         this.jwtUtils = jwtUtils;
+        this.appUtils = appUtils;
     }
 
     @GetMapping("/search")
@@ -34,7 +36,7 @@ public class UserController {
             @RequestParam(name = "profileId", required = false) Long profileId
     ) throws RecreoApiException
     {
-        AppUtils.validatePageNumberAndSize(page, size);
+        appUtils.validatePageNumberAndSize(page, size);
         return this.userService.searchUsers(page, size, profileId, searchText);
     }
 

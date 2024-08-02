@@ -39,13 +39,10 @@ public class AuthManager {
     }
 
     public Credential changePassword(ChangeTemporaryPasswordDTO changeTemporaryPasswordDTO, String token) throws RecreoApiException {
-        Credential credential = credentialRepository.findByUser_Email(changeTemporaryPasswordDTO.getEmail()).orElseThrow(() -> new RecreoApiException("Credenciales no encontradas para el usuario"));
+        String userEmail = jwtUtils.extractUsername(token);
+        Credential credential = credentialRepository.findByUser_Email(userEmail).orElseThrow(() -> new RecreoApiException("Credenciales no encontradas para el usuario"));
 
-        Long userId = jwtUtils.getUserIdFromToken(token);
-
-        if (!credential.getUser().getId().equals(userId)) { throw new RecreoApiException("Usuario no encontrado"); }
-
-        if (!passwordEncoder.matches(changeTemporaryPasswordDTO.getPassword(), credential.getPassword())) {
+        if (!passwordEncoder.matches(changeTemporaryPasswordDTO.getOldPassword(), credential.getPassword())) {
             throw new RecreoApiException("Contraseña temporal incorrecta");
         }
 

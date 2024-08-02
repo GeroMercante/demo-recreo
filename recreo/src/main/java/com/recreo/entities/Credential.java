@@ -37,9 +37,7 @@ public class Credential extends BaseEntity implements UserDetails {
 
     @PostLoad
     private void loadAuthorities() {
-        if (Boolean.TRUE.equals(isTemporary)) {
-            this.authorities = new ArrayList<>();
-        } else if (user != null && user.getProfile() != null) {
+        if (user != null && user.getProfile() != null) {
             List<SimpleGrantedAuthority> list = new ArrayList<>();
             for (String s : user.getProfile().getPermissionCodes()) {
                 SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(s);
@@ -51,7 +49,7 @@ public class Credential extends BaseEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return Boolean.TRUE.equals(isTemporary) ?  null : authorities;
     }
 
     @Override
@@ -66,7 +64,7 @@ public class Credential extends BaseEntity implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return user.getActive();
     }
 
     @Override

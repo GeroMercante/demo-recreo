@@ -1,19 +1,26 @@
 package com.recreo.utils;
 
 import com.recreo.exceptions.RecreoApiException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AppUtils {
-    public static void validatePageNumberAndSize(int page, int size) throws RecreoApiException {
+
+    @Autowired
+    private MessageUtil messageUtil;
+
+    public void validatePageNumberAndSize(int page, int size) throws RecreoApiException {
         if (page < 0) {
-            throw new RecreoApiException("El paginado no puede ser menor de cero.");
+            throw new RecreoApiException(messageUtil.getMessage("pageable.less.zero"));
         }
 
         if (size < 0) {
-            throw new RecreoApiException("El numero del tamaño no puede ser menor de cero.");
+            throw new RecreoApiException(messageUtil.getMessage("number.less.zero"));
         }
 
         if (size > AppConstant.MAX_PAGE_SIZE) {
-            throw new RecreoApiException("Page size must not be greater than " + AppConstant.MAX_PAGE_SIZE);
+            throw new RecreoApiException(messageUtil.getMessage("pageable.must", AppConstant.MAX_PAGE_SIZE));
         }
     }
 }

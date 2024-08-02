@@ -1,9 +1,9 @@
 package com.recreo.utils;
 
 import com.recreo.entities.Credential;
+import com.recreo.exceptions.ExpiredJwtException;
 import com.recreo.exceptions.RecreoApiException;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,26 +55,30 @@ public class JwtUtils {
                 .compact();
     }
 
-    private <T> T extractClaims(String token, Function<Claims, T> claimsFunction) {
-        return claimsFunction.apply(Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload());
+    private <T> T extractClaims(String token, Function<Claims, T> claimsFunction) throws ExpiredJwtException {
+        try {
+            return claimsFunction.apply(Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload());
+        } catch (io.jsonwebtoken.ExpiredJwtException e) {
+            throw new ExpiredJwtException();
+        }
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails) {
+    public boolean isTokenValid(String token, UserDetails userDetails) throws ExpiredJwtException {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    public Long getUserIdFromToken(String token) {
+    public Long getUserIdFromToken(String token) throws ExpiredJwtException {
         return extractClaims(token, claims -> claims.get("userId", Long.class));
     }
 
-    public Boolean getIsTemporary(String token) {
+    public Boolean getIsTemporary(String token)  throws ExpiredJwtException {
         return extractClaims(token, claims -> claims.get("isTemporary", Boolean.class));
     }
 
-    public String extractUsername(String token) { return extractClaims(token, Claims::getSubject); }
+    public String extractUsername(String token)  throws ExpiredJwtException { return extractClaims(token, Claims::getSubject); }
 
-    public boolean isTokenExpired(String token) { return extractClaims(token, Claims::getExpiration).before(new Date()); }
+    public boolean isTokenExpired(String token)  throws ExpiredJwtException { return extractClaims(token, Claims::getExpiration).before(new Date()); }
 
     public static String getAndValidateToken(String authHeader) throws RecreoApiException {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {

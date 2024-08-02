@@ -7,12 +7,10 @@ import com.recreo.exceptions.RecreoApiException;
 import com.recreo.services.AuthService;
 import com.recreo.services.RevokedTokenService;
 import com.recreo.utils.AppConstant;
-import com.recreo.utils.AppUtils;
 import com.recreo.utils.JwtUtils;
 import com.recreo.utils.Validators;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -36,18 +34,14 @@ public class AuthController {
 
     @PutMapping("/change/password")
     public LoginResponseDTO changePassword(@RequestBody ChangeTemporaryPasswordDTO changeTemporaryPasswordDTO, HttpServletRequest request) throws RecreoApiException {
-        Validators.validateEmail(changeTemporaryPasswordDTO.getEmail());
         final String jwtToken = JwtUtils.getAndValidateToken(request.getHeader("Authorization"));
         return authService.changePassword(changeTemporaryPasswordDTO, jwtToken);
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletRequest request) throws RecreoApiException {
+    public void logout(HttpServletRequest request) throws RecreoApiException {
         final String jwtToken = JwtUtils.getAndValidateToken(request.getHeader("Authorization"));
-
         tokenService.revokeToken(jwtToken);
-
-        return ResponseEntity.ok().build();
     }
 
 }

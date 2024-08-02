@@ -1,5 +1,8 @@
-package com.recreo.config;
+package com.recreo.config.filters;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.recreo.exceptions.ExpiredJwtException;
+import com.recreo.http.response.ApiResponseError;
 import com.recreo.services.RevokedTokenService;
 import com.recreo.services.impl.CredentialServiceImpl;
 import com.recreo.utils.JwtUtils;
@@ -52,18 +55,29 @@ public class JWTAuthFilter extends OncePerRequestFilter {
             return;
         }
 
-      userEmail = jwtUtils.extractUsername(jwtToken);
+      try {
+          userEmail = jwtUtils.extractUsername(jwtToken);
 
-       if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-           UserDetails userDetails = credentialService.loadUserByUsername(userEmail);
+          if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+              UserDetails userDetails = credentialService.loadUserByUsername(userEmail);
 
-           if (jwtUtils.isTokenValid(jwtToken, userDetails)) {
-               UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-               authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-               logger.info("{}", userDetails.getAuthorities());
-               SecurityContextHolder.getContext().setAuthentication(authToken);
-           }
-       }
+              if (jwtUtils.isTokenValid(jwtToken, userDetails)) {
+                  UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                  authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                  logger.info("{}", userDetails.getAuthorities());
+                  SecurityContextHolder.getContext().setAuthentication(authToken);
+              }
+          }
+      } catch (ExpiredJwtException e) {
+          response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+          response.setContentType("application/json");
+          ApiResponseError apiResponse = new ApiResponseError();
+          apiResponse.setCode(e.getCode().getCode());
+          apiResponse.setStatus(e.getStatus());
+          apiResponse.setMessage(e.getMessage());
+          response.getWriter().write(new ObjectMapper().writeValueAsString(apiResponse));
+          return;
+      }
 
         filterChain.doFilter(request, response);
     }

@@ -1,7 +1,9 @@
 package com.recreo.config;
 
+import com.recreo.config.filters.JWTAuthFilter;
 import com.recreo.services.impl.CredentialServiceImpl;
 import com.recreo.enums.PermissionsEnum;
+import com.recreo.utils.ApiRoutes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,13 +42,11 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/actuator/**").permitAll()
-                        .requestMatchers("/api/v1/bo/auth/**").permitAll()
-                        .requestMatchers("/api/v1/app/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/bo/auth/change/password").authenticated()
-                        .requestMatchers("/api/v1/bo/users/search").hasAnyAuthority(PermissionsEnum.USERS_READ.name(), PermissionsEnum.USERS_READ_WRITE.name())
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/bo/users/**").hasAnyAuthority(PermissionsEnum.USERS_READ_WRITE.name())
-                        .requestMatchers(HttpMethod.POST, "/api/v1/bo/users/**").hasAnyAuthority(PermissionsEnum.USERS_READ_WRITE.name())
+                        .requestMatchers(ApiRoutes.PUBLIC_ROUTES).permitAll()
+                        .requestMatchers(HttpMethod.PUT, ApiRoutes.BO_AUTH_CHANGE_PASSWORD).authenticated()
+                        .requestMatchers(HttpMethod.GET, ApiRoutes.BO_USERS_BASE).hasAnyAuthority(PermissionsEnum.USERS_READ.name(), PermissionsEnum.USERS_READ_WRITE.name())
+                        .requestMatchers(HttpMethod.PUT, ApiRoutes.BO_USERS_BASE).hasAnyAuthority(PermissionsEnum.USERS_READ_WRITE.name())
+                        .requestMatchers(HttpMethod.POST, ApiRoutes.BO_USERS_BASE).hasAnyAuthority(PermissionsEnum.USERS_READ_WRITE.name())
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
